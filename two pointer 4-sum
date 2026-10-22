@@ -1,0 +1,192 @@
+# DSA Practice: 4Sum Problem
+
+## 📌 Overview
+
+Today, I revised the 4Sum problem and focused on understanding the logic behind sorting, nested loops, two pointers, duplicate handling, and time complexity.
+
+**Problem:** Given an integer array `nums` and an integer `target`, find all unique quadruplets `[a, b, c, d]` such that:
+
+`a + b + c + d == target`
+
+Each quadruplet must contain four elements from different indices.
+
+## 🧠 Approach and Intuition
+
+### Step 1: Sort the array
+
+Sorting helps us use the two-pointer technique efficiently. When the sum is too small or too large, we can decide which pointer to move.
+
+### Step 2: Fix the first element
+
+Use the first `for` loop to select the first element.
+
+```cpp
+for (int i = 0; i < n - 3; i++)
+```
+
+**Why `n - 3`?**
+
+After choosing the first element, we need three more elements to form a quadruplet.
+
+### Step 3: Fix the second element
+
+Use the second `for` loop to select the second element.
+
+```cpp
+for (int j = i + 1; j < n - 2; j++)
+```
+
+**Why `n - 2`?**
+
+After fixing the first two elements, two more elements are required.
+
+### Step 4: Apply two pointers
+
+```cpp
+int l = j + 1;
+int k = n - 1;
+```
+
+* `i`: First fixed element.
+* `j`: Second fixed element.
+* `l`: Left pointer.
+* `k`: Right pointer.
+
+Calculate the sum of all four elements.
+
+* If `sum == target`, store the quadruplet.
+* If `sum < target`, increment `l`.
+* If `sum > target`, decrement `k`.
+
+### Step 5: Handle duplicates
+
+Skip repeated values for `i`, `j`, `l`, and `k` to ensure that each quadruplet appears only once.
+
+## 💻 C++ Solution
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> ans;
+        int n = nums.size();
+
+        sort(nums.begin(), nums.end());
+
+        for (int i = 0; i < n - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+
+            for (int j = i + 1; j < n - 2; j++) {
+                if (j > i + 1 &&
+                    nums[j] == nums[j - 1])
+                    continue;
+
+                int l = j + 1;
+                int k = n - 1;
+
+                while (l < k) {
+                    long long sum =
+                        (long long)nums[i] +
+                        nums[j] + nums[l] + nums[k];
+
+                    if (sum == target) {
+                        ans.push_back({
+                            nums[i], nums[j],
+                            nums[l], nums[k]
+                        });
+
+                        l++;
+                        k--;
+
+                        while (l < k &&
+                               nums[l] == nums[l - 1])
+                            l++;
+
+                        while (l < k &&
+                               nums[k] == nums[k + 1])
+                            k--;
+                    }
+                    else if (sum < target) {
+                        l++;
+                    }
+                    else {
+                        k--;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+};
+```
+
+## 🧪 Example
+
+**Input**
+
+```text
+nums = [1, 0, -1, 0, -2, 2]
+target = 0
+```
+
+**After sorting**
+
+```text
+[-2, -1, 0, 0, 1, 2]
+```
+
+**Output**
+
+```text
+[
+  [-2, -1, 1, 2],
+  [-2, 0, 0, 2],
+  [-1, 0, 0, 1]
+]
+```
+
+Each quadruplet has a sum equal to `0`.
+
+## ⏱️ Complexity Analysis
+
+* **Time Complexity:** `O(n^3)` — two nested loops and a two-pointer scan.
+* **Auxiliary Space:** `O(log n)` typically for the sorting stack, excluding the output.
+* **Output Space:** Depends on the number of unique quadruplets.
+
+## 🎯 Key Learnings
+
+1. Sorting can enable efficient pointer movement.
+2. Nested loops help fix the first two elements.
+3. Two pointers find the remaining two elements.
+4. Pointer movement depends on comparing the sum with the target.
+5. Duplicate handling avoids repeated answers.
+6. Loop boundaries such as `n - 3` and `n - 2` depend on how many elements remain to be selected.
+
+## 💡 Interview Preparation
+
+**Why use sorting?**
+Sorting enables the two-pointer technique to move intelligently based on the current sum.
+
+**Why use `n - 3`?**
+The first element needs three additional elements to complete a quadruplet.
+
+**Why use `n - 2` for the second loop?**
+After selecting the second element, two elements must remain for the pointers.
+
+**Why use `long long`?**
+The sum of four integers can exceed the range of a regular `int`.
+
+**Why skip duplicates?**
+To return only unique quadruplets.
+
+**Why not always sort?**
+Sorting can change the original order and indices. For problems requiring original indices, a hash map or another approach may be more appropriate.
+
+## 🚀 Conclusion
+
+I am focusing on understanding the logic behind DSA problems instead of memorizing solutions. My goal is to improve problem-solving skills, analyze time complexity, and explain my approach confidently in technical interviews.
