@@ -1,0 +1,68 @@
+# DSA Revision — DP Practice for Accolite Preparation
+
+## Problem: House Robber
+
+**Platform:** LeetCode 198  
+**Topic:** Dynamic Programming (DP)  
+**Language:** C++
+
+### Problem Statement
+A robber wants to rob houses arranged in a row. Each house contains some money. The robber cannot rob two adjacent houses.
+
+Given an array `nums`, return the maximum amount of money the robber can steal without robbing adjacent houses.
+
+### Example
+
+**Input:**
+`nums = [2, 7, 9, 3, 1]`
+
+**Output:**
+`12`
+
+**Explanation:**
+Rob houses containing `2`, `9`, and `1`.
+
+Total money = `2 + 9 + 1 = 12`.
+
+### Approach
+For each house, we have two choices:
+
+1. **Skip the current house:** Keep the maximum amount obtained from the previous house.
+2. **Rob the current house:** Add its money to the maximum amount obtained up to the house before the previous one.
+
+Choose the maximum of these two options.
+
+### C++ Solution
+
+```cpp
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int prev2 = 0;
+        int prev1 = 0;
+
+        for (int money : nums) {
+            int curr = max(prev1, money + prev2);
+
+            prev2 = prev1;
+            prev1 = curr;
+        }
+
+        return prev1;
+    }
+};
+```
+
+### Complexity Analysis
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(1)
+
+### What I Learned
+- How Dynamic Programming avoids repeated calculations.
+- How to make choices using the maximum of two possibilities.
+- How to optimize DP space using two variables instead of an extra array.
+
+### Practice Goal
+Continue solving DP interview questions and improve problem-solving skills for fresher-level coding interviews.
+
+*Note: House Robber is a verified LeetCode problem. Its classification as an Accolite previous-year question has not been independently verified, so this is recorded as Accolite interview preparation rather than a confirmed Accolite PYQ.*
