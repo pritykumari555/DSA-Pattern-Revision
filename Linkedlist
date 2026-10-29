@@ -1,0 +1,80 @@
+Linked List: Slow and Fast Pointer Technique
+Aaj hum Slow and Fast Pointer ko diagram se samjhenge — kaise kaam karta hai, slow ek step aur fast do steps kyun chalta hai, aur kin questions mein use kar sakte hain.
+1. Slow aur Fast Pointer kya hain?
+Linked List mein har node ke paas data aur next node ka address/reference hota hai.
+- Slow pointer: ek iteration mein 1 node aage badhta hai.
+- Fast pointer: ek iteration mein 2 nodes aage badhta hai.
+Dono same starting node se shuru ho sakte hain, lekin unki speed alag hoti hai.
+2. Diagram se samjho
+Maan lo Linked List hai:
+Starting position
+1
+
+S + F
+2
+
+
+3
+
+
+4
+
+
+5
+
+
+NULL
+
+S = slow, F = fast. Dono node 1 par hain.
+
+First iteration
+1
+
+
+2
+
+Slow
+3
+
+Fast
+4
+
+
+5
+
+
+NULL
+
+Slow node 2 par aaya; fast node 3 par aaya.
+
+Second iteration
+1
+
+
+2
+
+
+3
+
+Slow
+4
+
+
+5
+
+Fast
+NULL
+
+Slow node 3 par aur fast node 5 par hai. Fast ab aage nahi ja sakta.
+
+Isliye jab list mein 5 nodes hon aur hum slow ko ek step aur fast ko do steps chalayein, toh slow middle node tak pahunch sakta hai.
+3. Slow-fast pointer ka C++ code
+ListNode* slow = head;
+ListNode* fast = head;
+
+while (fast != NULL && fast->next != NULL) {
+    slow = slow->next;            // 1 step
+    fast = fast->next->next;      // 2 steps
+}
+
+return slow;
