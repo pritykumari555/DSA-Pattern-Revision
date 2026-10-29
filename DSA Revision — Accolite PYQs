@@ -1,0 +1,59 @@
+# DSA Revision — Arrays
+
+**Date:** 29 October 2026
+
+### Today's Progress
+- Practiced the array-based addition question.
+- Revised how to add `1` to a number represented as an array of digits.
+- Understood how carry works when digits are `9`.
+- Practiced creating a new output vector.
+
+### Problem: Plus One
+**Example:**
+- Input: `digits = [9, 9, 9]`
+- Output: `[1, 0, 0, 0]`
+
+**Logic:**
+1. Start from the last digit.
+2. If the digit is less than `9`, add `1` and return the array.
+3. If the digit is `9`, change it to `0` and continue to the previous digit.
+4. If all digits are `9`, insert `1` at the beginning.
+
+**Time Complexity:** O(n)
+
+**Space Complexity:** O(n) in the worst case for the returned vector, considering the extra digit and vector resizing.
+
+### Learning
+Practiced array manipulation, carry handling, loops, and vectors in C++.    
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> plusOne(vector<int>& digits) {
+    int n = digits.size();
+
+    for (int i = n - 1; i >= 0; i--) {
+        if (digits[i] < 9) {
+            digits[i]++;
+            return digits;
+        }
+
+        digits[i] = 0;
+    }
+
+    digits.insert(digits.begin(), 1);
+    return digits;
+}
+
+int main() {
+    vector<int> arr = {9, 9, 9};
+
+    vector<int> ans = plusOne(arr);
+
+    cout << "Output: ";
+    for (int digit : ans) {
+        cout << digit << " ";
+    }
+
+    return 0;
+}
