@@ -78,3 +78,37 @@ while (fast != NULL && fast->next != NULL) {
 }
 
 return slow;
+
+
+## Problem: Middle of the Linked List
+
+**LeetCode:** https://leetcode.com/problems/middle-of-the-linked-list/description/
+
+**Approach:** Slow and Fast Pointers
+
+- Slow pointer moves one step at a time.
+- Fast pointer moves two steps at a time.
+- When fast reaches the end, slow points to the middle node.
+
+**Time Complexity:** O(n)
+
+**Auxiliary Space:** O(1)
+
+**C++ Solution:**
+
+```cpp
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        return slow;
+    }
+};
+```
